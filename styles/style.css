@@ -1,0 +1,44 @@
+/* THIS PROJECT WILL BE USING THE BEM CSS STYLING MODEL */
+
+:root {
+    /* CSS HEX */
+--cream: #fffccdff;
+--aero-blue: #d0fbe7ff;
+--celeste: #c5f7efff;
+--celeste-2: #cafcfdff;
+--azure-x-11-web-color: #e0f5ffff;
+--pale-purple-pantone: #e6d8ffff;
+--pink-lace: #ffdbfbff;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: fit-content;
+    height: fit-content;
+    border: solid red;
+}
+
+.container__calendar {
+    border: solid green;
+    margin: 10px;
+}
+
+.calendar {
+    width:100%;
+}
+
+.tracker__row {
+    display: flex;
+    border: solid blue;
+    width: fit-content;
+    margin: 10px;
+}
+
+.row__label {
+    margin-right: 1vw;
+}
