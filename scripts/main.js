@@ -6,24 +6,27 @@ let days = (month,year) => {
 let checkboxElements = document.getElementsByClassName("row__checkboxes");
 
 document.querySelector('input[type="date"]').addEventListener("change", function() {
-    let input = this.value;
+    let input = this.value; // "XXXX-XX-XX" Year, Month, Day
     let year = input.slice(0,4)
     let month = input.slice(5,7)
     let daysInMonth = parseInt(days(month, year));
+    
     //call function to add days(month, year) # of checkboxes
     addTotalDaysCheckboxes(daysInMonth, checkboxElements)
     console.log("Days: " + daysInMonth);
 })
 
 // adds a checkbox object to to div row__checkboxes for ever day in user selected month
+// calls the deleteChild function to ensure div is empty before appending checkboxes
 let addTotalDaysCheckboxes = (days, checkboxesDiv) => {
-    // loops through # of habits, j = div
+    // loops through # of habits (parent element), j = div
     for (let j = 0; j < checkboxesDiv.length; j++) {
+        // deletes present checkboxes of the div
+        deleteChild(checkboxesDiv[j]);
         // loops through # of days, i = day #
         for(let i = 0; i < days; i++) {
             // populates habit with checkbox
             checkboxesDiv[j].append(createCheckbox());
-            console.log("Hello");
         }
     }
 }
@@ -38,3 +41,12 @@ let createCheckbox = () => {
     checkbox.id = ""; 
     return checkbox;
 }
+
+// deletes all the children in parent element (used for checkboxes)
+let deleteChild = (parent) => { 
+    let child = parent.lastElementChild;  
+    while (child) { 
+        parent.removeChild(child); 
+        child = parent.lastElementChild; 
+    } 
+} 
