@@ -23,6 +23,11 @@
     border: solid red;
 }
 
+.container__habitInput {
+    border: solid pink;
+    margin: 10px;
+}
+
 .container__calendar {
     border: solid green;
     margin: 10px;
@@ -30,6 +35,10 @@
 
 .calendar {
     width:100%;
+}
+
+.container__tracker {
+    border: solid black;
 }
 
 .habit__row {
@@ -41,4 +50,20 @@
 
 .row__label {
     margin-right: 1vw;
+}
+
+.row__checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row__checkboxes label {
+    font-size: x-small;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border: solid 1px lightblue;
+    border-radius: 50%;
 }

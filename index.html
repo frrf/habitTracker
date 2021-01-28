@@ -9,25 +9,25 @@
 </head>
 <body>
     <div class="container">
-        <div class="container__calendar">
-            <input class="calendar" type="date" value="">
+        <div class="container__habitInput">
+            <label class="habitInput__label" for="habitTextInput">Add a habit:</label>
+            <input class="habitInput__textInput" id="habitTextInput" type="text">
+            <button class="habitInput__btn" id="add_habit_btn">Add</button>
         </div>
 
 
-        <div class="container__tracker">
+        <div class="container__calendar">
+            <label for="calendar">Choose Date</label>
+            <input id="calendar" class="calendar" type="date" value="">
+        </div>
+        
+        <div class="container__tracker" id="trackerArea">
             <!-- ONE HABIT -->
-            <div class="habit__row">
+            <!-- <div class="habit__row">
                 <label for="" class="row__label">Habit example</label>
                 <div class="row__checkboxes">
                 </div>
-            </div>
-
-            <!-- ONE HABIT -->
-            <div class="habit__row">
-                <label for="" class="row__label">Habit example</label>
-                <div class="row__checkboxes">
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
