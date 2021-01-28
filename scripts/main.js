@@ -6,6 +6,10 @@ const habitInputButton = document.getElementById('add_habit_btn');
 const habitTrackerArea = document.getElementById('trackerArea');
 let calendarArea = document.getElementsByClassName('container__calendar');
 
+// loads locally stored habits of user onto the document
+habitTrackerArea.innerHTML = localStorage['test'];
+
+
 habitInputButton.addEventListener('click', () => {
     if (habit.value !== "") {
         addHabit();
@@ -33,6 +37,8 @@ function addHabit() {
 // holds the divs that contain the checkboxes for each habit 
 let checkboxElements = document.getElementsByClassName("row__checkboxes");
 
+//append local storage to checkboxElements
+
 document.querySelector('input[type="date"]').addEventListener("change", function() {
     let input = this.value; // "XXXX-XX-XX" Year, Month, Day
     let year = input.slice(0,4)
@@ -44,7 +50,15 @@ document.querySelector('input[type="date"]').addEventListener("change", function
     addTotalDaysCheckboxes(daysInMonth, checkboxElements, day, year, month);
     console.log("Days: " + daysInMonth);
     console.log("Day: " + day);
+
+
+
+    // store new div to local storage -------------------------------------------------
+    let userStorage = window.localStorage;
+    userStorage.setItem('test', trackerArea.innerHTML);
 })
+
+
 
 // return the number of days in a month, given user input parameters
 let days = (month,year) => {
@@ -61,34 +75,37 @@ let addTotalDaysCheckboxes = (days, checkboxesDiv, day, year, month) => {
         // loops through # of days, i = day #
         for(let i = 0; i < days; i++) {
             // populates habit with checkbox
-            checkboxesDiv[j].append(createCheckbox(i+1, day, year, month));
+            let checkbox = createCheckbox(i+1, day, year, month);
+            if (typeof checkbox === 'object' && checkbox !== null) {
+                checkboxesDiv[j].append(checkbox);
+            }
         }
     }
 }
 
 // returns a checkbox object when called
 let createCheckbox = (num, day, year, month) => {
-    let checkBoxDate = new Date(year+1,month,num);
-    let options = { weekday: 'long'};
-    let stringCurrentDate = new Intl.DateTimeFormat('en-US', options).format(checkBoxDate);
-    // creating label element 
-    let label = document.createElement('label');     
-    label.for = `check-${num}`;
-    label.innerText = `${month}/${num} ${stringCurrentDate}:`;
-    // creating checkbox element 
-    let checkbox = document.createElement('input');     
-    // Assigning the attributes to created checkbox 
-    checkbox.type = "checkbox"; 
-    checkbox.id = `check-${num}`;
     if (num < day) {
-        checkbox.disabled = true;
-        label.style= "display:none;"
+        console.log(`checkbox not made for day #${num}`);
+    } else {
+        let checkBoxDate = new Date(year+1,month,num);
+        let options = { weekday: 'long'};
+        let stringCurrentDate = new Intl.DateTimeFormat('en-US', options).format(checkBoxDate);
+        // creating label element 
+        let label = document.createElement('label');     
+        label.for = `check-${num}`;
+        label.innerText = `${month}/${num} ${stringCurrentDate}:`;
+        // creating checkbox element 
+        let checkbox = document.createElement('input');     
+        // Assigning the attributes to created checkbox 
+        checkbox.type = "checkbox"; 
+        checkbox.id = `check-${num}`;
+        label.append(checkbox);
+        return label;
     }
 
 
-    label.append(checkbox);
 
-    return label;
 }
 
 
