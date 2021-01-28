@@ -17,9 +17,17 @@
     box-sizing: border-box;
 }
 
+body {
+    background: var(--cream);
+    width: 100vw;
+    height: 100vh;
+}
+
 .container {
-    width: fit-content;
-    height: fit-content;
+    width: 50vw;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
     border: solid red;
 }
 
@@ -31,6 +39,7 @@
 .container__calendar {
     border: solid green;
     margin: 10px;
+    display: none;
 }
 
 .calendar {
@@ -41,6 +50,9 @@
     border: solid black;
 }
 
+.habitInput__btn {
+
+}
 .habit__row {
     display: flex;
     border: solid blue;
@@ -59,11 +71,10 @@
 
 .row__checkboxes label {
     font-size: x-small;
-    background-color: red;
+    background-color: lightblue;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 5px;
-    border: solid 1px lightblue;
-    border-radius: 50%;
+    border: solid 1px rgb(139, 226, 255);
 }

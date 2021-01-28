@@ -4,11 +4,12 @@ let habit = document.getElementById('habitTextInput');
 const habitInputButton = document.getElementById('add_habit_btn');
 // contains the div that is parent to each habit
 const habitTrackerArea = document.getElementById('trackerArea');
-
+let calendarArea = document.getElementsByClassName('container__calendar');
 
 habitInputButton.addEventListener('click', () => {
     if (habit.value !== "") {
         addHabit();
+        calendarArea[0].style="display:block;"
     }
 });
 habit.addEventListener("keydown", event => {
@@ -28,8 +29,22 @@ function addHabit() {
     habit.value = "";
   }
 
+
 // holds the divs that contain the checkboxes for each habit 
 let checkboxElements = document.getElementsByClassName("row__checkboxes");
+
+document.querySelector('input[type="date"]').addEventListener("change", function() {
+    let input = this.value; // "XXXX-XX-XX" Year, Month, Day
+    let year = input.slice(0,4)
+    let month = input.slice(5,7)
+    let day = input.slice(8,10);
+    let daysInMonth = parseInt(days(month, year));
+    
+    //call function to add days(month, year) # of checkboxes
+    addTotalDaysCheckboxes(daysInMonth, checkboxElements, day, year, month);
+    console.log("Days: " + daysInMonth);
+    console.log("Day: " + day);
+})
 
 // return the number of days in a month, given user input parameters
 let days = (month,year) => {
@@ -38,7 +53,7 @@ let days = (month,year) => {
 
 // adds a checkbox object to to div row__checkboxes for ever day in user selected month
 // calls the deleteChild function to ensure div is empty before appending checkboxes
-let addTotalDaysCheckboxes = (days, checkboxesDiv, day) => {
+let addTotalDaysCheckboxes = (days, checkboxesDiv, day, year, month) => {
     // loops through # of habits (parent element), j = div
     for (let j = 0; j < checkboxesDiv.length; j++) {
         // deletes present checkboxes of the div
@@ -46,17 +61,20 @@ let addTotalDaysCheckboxes = (days, checkboxesDiv, day) => {
         // loops through # of days, i = day #
         for(let i = 0; i < days; i++) {
             // populates habit with checkbox
-            checkboxesDiv[j].append(createCheckbox(i+1, day));
+            checkboxesDiv[j].append(createCheckbox(i+1, day, year, month));
         }
     }
 }
 
 // returns a checkbox object when called
-let createCheckbox = (num, day) => {
+let createCheckbox = (num, day, year, month) => {
+    let checkBoxDate = new Date(year+1,month,num);
+    let options = { weekday: 'long'};
+    let stringCurrentDate = new Intl.DateTimeFormat('en-US', options).format(checkBoxDate);
     // creating label element 
     let label = document.createElement('label');     
     label.for = `check-${num}`;
-    label.innerText = `Day: ${num}`;
+    label.innerText = `${month}/${num} ${stringCurrentDate}:`;
     // creating checkbox element 
     let checkbox = document.createElement('input');     
     // Assigning the attributes to created checkbox 
@@ -73,6 +91,9 @@ let createCheckbox = (num, day) => {
     return label;
 }
 
+
+
+
 // deletes all the children in parent element (used for checkboxes)
 let deleteChild = (parent) => { 
     let child = parent.lastElementChild;  
@@ -82,15 +103,14 @@ let deleteChild = (parent) => {
     } 
 } 
 
-document.querySelector('input[type="date"]').addEventListener("change", function() {
-    let input = this.value; // "XXXX-XX-XX" Year, Month, Day
-    let year = input.slice(0,4)
-    let month = input.slice(5,7)
-    let day = input.slice(8,10);
-    let daysInMonth = parseInt(days(month, year));
-    
-    //call function to add days(month, year) # of checkboxes
-    addTotalDaysCheckboxes(daysInMonth, checkboxElements, day);
-    console.log("Days: " + daysInMonth);
-    console.log("Day: " + day);
-})
+
+function addHabit() {
+    //habit.value should be a <div class="habit__row"> object
+    habitTrackerArea.innerHTML += 
+    `<div class='habit__row'>
+        <label for='' class='row__label'>${habit.value}:</label>
+        <div class='row__checkboxes'>
+        </div>
+    </div>`;
+    habit.value = "";
+  }
