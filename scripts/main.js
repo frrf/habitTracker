@@ -7,7 +7,11 @@ const habitTrackerArea = document.getElementById('trackerArea');
 let calendarArea = document.getElementsByClassName('container__calendar');
 
 // loads locally stored habits of user onto the document
-habitTrackerArea.innerHTML = localStorage['test'];
+if (typeof localStorage['test'] === 'undefined') {
+    console.log('User has no locally saved data')
+} else {
+    habitTrackerArea.innerHTML = localStorage['test'];
+}
 
 
 habitInputButton.addEventListener('click', () => {
