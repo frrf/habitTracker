@@ -1,49 +1,39 @@
-//#################################    Element variables    #################################\\
+//#################################    Element variables    ##########################################\\
 // contains text input element with user's habit
-let habit = document.getElementById('habitTextInput');
+const habit = document.getElementById('habitTextInput');
 // contains the button that adds the habit to habitTrackerArea
 const habitInputButton = document.getElementById('add_habit_btn');
 // contains the div that is parent to each habit
 const habitTrackerArea = document.getElementById('trackerArea');
-let calendarArea = document.getElementsByClassName('container__calendar');
+// contains the div containing the calendar input element
+const calendarArea = document.getElementById('calendar');
 // holds the divs that contain the checkboxes for each habit 
-let checkboxElements = document.getElementsByClassName("row__checkboxes");
-//#############################################################################################\\
+const checkboxElements = document.getElementsByClassName("row__checkboxes");
+// initializes localStorage object
+const userStorage = window.localStorage;
 
+let counter = 1;
+//####################################################################################################\\
 
+//#################################    Input Event Listeners    ######################################\\
+document.querySelector('input[type="date"]').addEventListener("change", calendarInput);
 
-//#################################    loads locally stored habits of user onto the document    #################################\\
-if (typeof localStorage['test'] === 'undefined') {
-    console.log('User has no locally saved data')
-} else {
-    habitTrackerArea.innerHTML = localStorage['test'];
-    calendarArea[0].style="display:block;"
-}
-//#############################################################################################\\
-
-
-
-//#################################    Input Event Listeners    #################################\\
 habitInputButton.addEventListener('click', () => {
     if (habit.value !== "") {
         habitTrackerArea.append(createHabit(habit));
-        calendarArea[0].style="display:block;"
+        // add habit to storage--------------------------------------------------------------
+        calendarArea.style="display:block;"
     }
 });
+
 habit.addEventListener("keydown", event => {
     if (habit.value !== "" && event.key === "Enter") {
         habitInputButton.click();
     }
 });
+//####################################################################################################\\
 
-document.querySelector('input[type="date"]').addEventListener("change", calendarInput);
-
-//#######################################################################################\\
-
-
-
-//#################################    Functions    #################################\\
-
+//##############################################    Functions    ###################################################\\
 function calendarInput() {
     let input = this.value; // "XXXX-XX-XX" Year, Month, Day
     let year = parseInt(input.slice(0,4));
@@ -56,15 +46,41 @@ function calendarInput() {
                     "month": month,
                     "year": year 
                 };
+    userStorage.setItem('chosenDate', input);
     //call function to add # of checkboxes
     addTotalDaysCheckboxes(dateInfo);
     //call function to update local storage
     store();
+    document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("change", checked));
 }
+
+function createHabit(newHabit) {
+    let habitText = newHabit.value;
+    let divHabitRow = document.createElement('div');
+    divHabitRow.classList.add("habit__row");
+    divHabitRow.id = `habit-${counter}`;
+
+    let rowLabelDiv = document.createElement('label');
+    rowLabelDiv.classList.add("row__label");
+    rowLabelDiv.textContent = habitText;
+
+    let rowCheckboxesDiv = document.createElement('div');
+    rowCheckboxesDiv.classList.add("row__checkboxes");
+
+    divHabitRow.append(rowLabelDiv);
+    divHabitRow.append(rowCheckboxesDiv);
+    newHabit.value = "";
+    counter++;
+    return divHabitRow;
+}
+
+// return the number of days in a month, given user input parameters
+let days = (month,year) => {return new Date(year, month, 0).getDate()};
+
 // adds a checkbox object to to div row__checkboxes for ever day in user selected month
 // calls the deleteChild function to ensure div is empty before appending checkboxes
 let addTotalDaysCheckboxes = (dateInfoObject) => {
-// let addTotalDaysCheckboxes = (days, day, year, month) => {
+    // let addTotalDaysCheckboxes = (days, day, year, month) => {
     // loops through # of habits (parent element), j = div
     for (let j = 0; j < checkboxElements.length; j++) {
         // deletes present checkboxes of the div
@@ -72,56 +88,11 @@ let addTotalDaysCheckboxes = (dateInfoObject) => {
         // loops through # of days, i = day #
         for(let i = 0; i < dateInfoObject.days; i++) {
             // populates habit with checkbox
-            let checkbox = createCheckbox(i+1, dateInfoObject.dayChosen, dateInfoObject.year, dateInfoObject.month);
+            let checkbox = createCheckbox(j+1,i+1, dateInfoObject.dayChosen, dateInfoObject.year, dateInfoObject.month);
             if (typeof checkbox === 'object' && checkbox !== null) {
                 checkboxElements[j].append(checkbox);
             }
         }
-    }
-}
-
-
-// store trackerArea div to local storage
-function store() {
-    let userStorage = window.localStorage;
-    userStorage.setItem('test', trackerArea.innerHTML);
-}
-
-// return the number of days in a month, given user input parameters
-let days = (month,year) => {
-return new Date(year, month, 0).getDate();
-};
-
-
-// returns a checkbox object when called
-let createCheckbox = (num, day, year, month) => {
-    if (num >= day) {
-        let checkBoxDate = new Date(year+1,month,num);
-        let options = { weekday: 'long'};
-        let stringCurrentDate = new Intl.DateTimeFormat('en-US', options).format(checkBoxDate);
-        // creating label element 
-        let label = document.createElement('label');     
-        label.for = `check-${num}`;
-        label.innerText = `${month}/${num} ${stringCurrentDate}:`;
-        // creating checkbox element 
-        let checkbox = document.createElement('input');     
-        // Assigning the attributes to created checkbox 
-        checkbox.type = "checkbox"; 
-        checkbox.id = `check-${num}`;
-        checkbox.checked = true;
-        checkbox.addEventListener('click', function() {
-            if (this.checked === true) {
-                this.setAttribute('checked', this.checked);
-                let userStorage = window.localStorage;
-                userStorage.setItem('test', trackerArea.innerHTML);
-                console.log("checked")
-            } else {
-                console.log("unchecked")
-            }
-        })
-
-        label.append(checkbox);
-        return label;
     }
 }
 
@@ -134,20 +105,52 @@ let deleteChild = (parent) => {
     } 
 } 
 
-function createHabit(newHabit) {
-    let habitText = newHabit.value;
-    let divHabitRow = document.createElement('div');
-    divHabitRow.classList.add("habit__row");
+// returns a checkbox object when called
+let createCheckbox = (habitNum,num, day, year, month) => {
+    if (num >= day) {
+        let checkBoxDate = new Date(year+1,month,num);
+        let options = { weekday: 'long'};
+        let stringCurrentDate = new Intl.DateTimeFormat('en-US', options).format(checkBoxDate);
+        // creating label element 
+        let label = document.createElement('label');     
+        label.for = `check-${num}`;
+        label.innerText = `${month}/${num} ${stringCurrentDate}:`;
+        // creating checkbox element 
+        let checkbox = document.createElement('input');     
+        // Assigning the attributes to created checkbox 
+        checkbox.type = "checkbox"; 
+        checkbox.id = `habit-${habitNum}-check-${num}`;
+        checkbox.checked = "";
+        label.append(checkbox);
+        return label;
+    }
+}
 
-    let rowLabelDiv = document.createElement('label');
-    rowLabelDiv.classList.add("row__label");
-    rowLabelDiv.textContent = habitText;
+// store trackerArea div to local storage
+function store() {
+    userStorage.setItem('test', trackerArea.innerHTML);
+}
 
-    let rowCheckboxesDiv = document.createElement('div');
-    rowCheckboxesDiv.classList.add("row__checkboxes");
+//#####################    loads locally stored habits of user onto the document    ##################\\
+if (typeof localStorage['test'] === 'undefined') {
+    console.log('User has no locally saved data')
+} else {
+    habitTrackerArea.innerHTML = localStorage['test'];
+    calendarArea.style="display:block;"
+    document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("change", checked));
+//####################################################################################################\\
+}
 
-    divHabitRow.append(rowLabelDiv);
-    divHabitRow.append(rowCheckboxesDiv);
-    newHabit.value = "";
-    return divHabitRow;
+
+// document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("click", checked));
+
+function checked() {
+    if (this.checked == true){
+        console.log(`checked:${this.id}`);
+        this.setAttribute("checked", "");
+    }else{
+        console.log(`unchecked:${this.id}`)
+        this.removeAttribute("checked");
+    }
+    localStorage['test'] = habitTrackerArea.innerHTML;
 }

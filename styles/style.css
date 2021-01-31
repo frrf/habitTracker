@@ -77,4 +77,9 @@ body {
     align-items: center;
     padding: 5px;
     border: solid 1px rgb(139, 226, 255);
+    user-select: none;
+}
+
+.row__checkboxes label, input {
+    cursor: pointer;
 }
