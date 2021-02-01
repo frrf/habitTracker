@@ -20,17 +20,14 @@
 body {
     background: var(--cream);
     width: 100vw;
-    height: 100vh;
+    height: auto;
 }
 
 .container {
-    /* width: ; */
-    height: auto;
-    /* margin-left: auto; */
-    margin-top: clamp(15px,3vw,5vw);
-    margin-left: clamp(15px,3vw,5vw);
-    margin-right: clamp(15px,3vw,5vw);
-    /* border: solid red; */
+     margin:clamp(15px,3vw,5vw);
+    /*margin-left: clamp(15px,3vw,5vw);
+    margin-right: clamp(15px,3vw,5vw); */
+    border: solid red;
 }
 
 .container__habitInput {
@@ -58,7 +55,6 @@ body {
 .habit__row {
     display: flex;
     /* border: solid blue; */
-    width: fit-content;
     margin: 10px;
 }
 
@@ -68,7 +64,8 @@ body {
 
 .row__checkboxes {
     display: flex;
-    flex-wrap: wrap;
+    width: clamp(216px,88vw,65rem);
+    overflow: scroll;
 }
 
 .row__checkboxes label {
