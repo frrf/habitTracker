@@ -21,28 +21,30 @@ body {
     background: var(--cream);
     width: 100vw;
     height: auto;
+    overflow: hidden; /* Hide scrollbars */
+
 }
 
 .container {
-     margin:clamp(15px,3vw,5vw);
-    /*margin-left: clamp(15px,3vw,5vw);
-    margin-right: clamp(15px,3vw,5vw); */
+    margin: clamp(21vh,5vh,50vh) auto;
+    width: clamp(292px,76vw,1129px);
     border: solid red;
 }
 
-.container__habitInput {
-    /* border: solid pink; */
+.container > * {
     margin: 10px;
 }
 
+.container__habitInput {
+
+}
+
 .container__calendar {
-    /* border: solid green; */
-    margin: 10px;
     display: none;
 }
 
 .calendar {
-    width:100%;
+    width: clamp(217px,20vw,14rem);
 }
 
 .container__tracker {
@@ -54,18 +56,20 @@ body {
 }
 .habit__row {
     display: flex;
-    /* border: solid blue; */
-    margin: 10px;
 }
 
 .row__label {
     margin-right: 1vw;
+    width: clamp(50px,6vw,80px);
 }
 
 .row__checkboxes {
     display: flex;
-    width: clamp(216px,88vw,65rem);
     overflow: scroll;
+}
+
+.row__checkboxes::-webkit-scrollbar {
+    display: none;
 }
 
 .row__checkboxes label {
@@ -86,4 +90,8 @@ body {
 
 .row__checkboxes label, input {
     cursor: pointer;
+}
+
+#reset__btn {
+    display: none;
 }

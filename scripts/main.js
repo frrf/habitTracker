@@ -7,6 +7,8 @@ const habitInputButton = document.getElementById('add_habit_btn');
 const habitTrackerArea = document.getElementById('trackerArea');
 // contains the div containing the calendar input element
 const calendarArea = document.getElementById('calendar');
+// contains the div containing the calendar input element
+const resetButton = document.getElementById('reset__btn');
 // holds the divs that contain the checkboxes for each habit 
 const checkboxElements = document.getElementsByClassName("row__checkboxes");
 // initializes localStorage object
@@ -22,7 +24,8 @@ habitInputButton.addEventListener('click', () => {
     if (habit.value !== "") {
         habitTrackerArea.append(createHabit(habit));
         // add habit to storage--------------------------------------------------------------
-        calendarArea.style="display:block;"
+        calendarArea.style.display= "block";
+        resetButton.style.display = "block";
     }
 });
 
@@ -31,6 +34,16 @@ habit.addEventListener("keydown", event => {
         habitInputButton.click();
     }
 });
+
+
+resetButton.addEventListener('click', () => {
+    habitTrackerArea.innerHTML = "";
+    localStorage.clear();
+    calendarArea.style.display = "none";
+    resetButton.style.display = "none";
+});
+
+
 //####################################################################################################\\
 
 //##############################################    Functions    ###################################################\\
@@ -137,6 +150,7 @@ if (typeof localStorage['test'] === 'undefined') {
 } else {
     habitTrackerArea.innerHTML = localStorage['test'];
     calendarArea.style="display:block;"
+    resetButton.style.display = "block";
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("change", checked));
 //####################################################################################################\\
 }
