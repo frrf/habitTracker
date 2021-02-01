@@ -24,20 +24,22 @@ body {
 }
 
 .container {
-    width: 50vw;
+    /* width: ; */
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    border: solid red;
+    /* margin-left: auto; */
+    margin-top: clamp(15px,3vw,5vw);
+    margin-left: clamp(15px,3vw,5vw);
+    margin-right: clamp(15px,3vw,5vw);
+    /* border: solid red; */
 }
 
 .container__habitInput {
-    border: solid pink;
+    /* border: solid pink; */
     margin: 10px;
 }
 
 .container__calendar {
-    border: solid green;
+    /* border: solid green; */
     margin: 10px;
     display: none;
 }
@@ -47,7 +49,7 @@ body {
 }
 
 .container__tracker {
-    border: solid black;
+    /* border: solid black; */
 }
 
 .habitInput__btn {
@@ -55,7 +57,7 @@ body {
 }
 .habit__row {
     display: flex;
-    border: solid blue;
+    /* border: solid blue; */
     width: fit-content;
     margin: 10px;
 }
