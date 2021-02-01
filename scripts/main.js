@@ -109,12 +109,12 @@ let deleteChild = (parent) => {
 let createCheckbox = (habitNum,num, day, year, month) => {
     if (num >= day) {
         let checkBoxDate = new Date(year+1,month,num);
-        let options = { weekday: 'long'};
+        let options = { weekday: 'short'};
         let stringCurrentDate = new Intl.DateTimeFormat('en-US', options).format(checkBoxDate);
         // creating label element 
         let label = document.createElement('label');     
         label.for = `check-${num}`;
-        label.innerText = `${month}/${num} ${stringCurrentDate}:`;
+        label.innerHTML = `<h4>${stringCurrentDate.toUpperCase()}</h4> <h3>${num}</h3>`;
         // creating checkbox element 
         let checkbox = document.createElement('input');     
         // Assigning the attributes to created checkbox 
