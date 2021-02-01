@@ -152,6 +152,8 @@ if (typeof localStorage['test'] === 'undefined') {
     calendarArea.style="display:block;"
     resetButton.style.display = "block";
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("change", checked));
+    //fledge this out
+    document.querySelectorAll("label.row__label").forEach(habitLabel => habitLabel.addEventListener("click", function(){console.log("labelClick")}));
 //####################################################################################################\\
 }
 

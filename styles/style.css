@@ -60,7 +60,21 @@ body {
 
 .row__label {
     margin-right: 1vw;
-    width: clamp(50px,6vw,80px);
+    width: clamp(180px,6vw,80px);
+    transition: 200ms;
+    overflow: hidden;
+    user-select: none;
+}
+
+.row__label:hover {
+    transform:scale(1.05);
+    font-weight: bolder;
+    background-color: var(--azure-x-11-web-color);
+    cursor: pointer;
+}
+
+.row__label:active {
+    background-color: var(--celeste);
 }
 
 .row__checkboxes {
@@ -88,9 +102,10 @@ body {
 }
 
 
-.row__checkboxes label, input {
+.row__checkboxes label, input[type="checkbox"] {
     cursor: pointer;
 }
+
 
 #reset__btn {
     display: none;
