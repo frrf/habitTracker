@@ -28,7 +28,6 @@ body {
 .container {
     margin: clamp(21vh,5vh,50vh) auto;
     width: clamp(292px,76vw,1129px);
-    border: solid red;
 }
 
 .container > * {

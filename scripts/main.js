@@ -13,7 +13,6 @@ const resetButton = document.getElementById('reset__btn');
 const checkboxElements = document.getElementsByClassName("row__checkboxes");
 // initializes localStorage object
 const userStorage = window.localStorage;
-
 let counter = 1;
 //####################################################################################################\\
 
@@ -154,8 +153,8 @@ if (typeof localStorage['test'] === 'undefined') {
     document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("change", checked));
     //fledge this out
     document.querySelectorAll("label.row__label").forEach(habitLabel => habitLabel.addEventListener("click", function(){console.log("labelClick")}));
-//####################################################################################################\\
 }
+//####################################################################################################\\
 
 
 // document.querySelectorAll("input[type='checkbox']").forEach(checkbox => checkbox.addEventListener("click", checked));
