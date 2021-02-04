@@ -1,41 +1,54 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100;400;700&display=swap');
+
 /* THIS PROJECT WILL BE USING THE BEM CSS STYLING MODEL */
 
 :root {
-    /* CSS HEX */
---cream: #fffccdff;
---aero-blue: #d0fbe7ff;
---celeste: #c5f7efff;
---celeste-2: #cafcfdff;
---azure-x-11-web-color: #e0f5ffff;
---pale-purple-pantone: #e6d8ffff;
---pink-lace: #ffdbfbff;
+    --navy-blue: #03045eff;
+    --dark-cornflower-blue: #023e8aff;
+    --star-command-blue: #0077b6ff;
+    --blue-green: #0096c7ff;
+    --cerulean-crayola: #00b4d8ff;
+    --sky-blue-crayola: #48cae4ff;
+    --sky-blue-crayola-2: #90e0efff;
+    --blizzard-blue: #ade8f4ff;
+    --powder-blue: #caf0f8ff;    
 }
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Noto Sans HK', sans-serif;
 }
 
 body {
-    background: var(--cream);
+    background: var(--powder-blue);
     width: 100vw;
     height: auto;
     overflow: hidden; /* Hide scrollbars */
-
 }
 
 .container {
+    background-color: var(--sky-blue-crayola-2);
     margin: clamp(21vh,5vh,50vh) auto;
     width: clamp(292px,76vw,1129px);
+    border: solid var(--blizzard-blue);
+    border-radius: 25px;
 }
 
 .container > * {
     margin: 10px;
 }
 
-.container__habitInput {
+.container__habitInput button:hover{
+    background-color: rgb(0, 255, 179);
+    border: solid rgba(0, 85, 74, 0.529);
+}
 
+.container__habitInput button:active{
+    background-color:  rgba(0, 85, 74, 0.774);
+    border: solid rgba(0, 46, 40, 0.529);
 }
 
 .container__calendar {
@@ -47,12 +60,22 @@ body {
 }
 
 .container__tracker {
-    /* border: solid black; */
 }
 
-.habitInput__btn {
-
+.container__reset {
+    width: fit-content;
 }
+
+.container__reset #reset__btn:hover {
+    background-color: rgb(255, 206, 206);
+    border: solid rgb(255, 147, 147);
+}
+
+.container__reset #reset__btn:active {
+    background-color: rgb(255, 147, 147);
+    border: solid rgb(187, 78, 78);
+}
+
 .habit__row {
     display: flex;
 }
@@ -68,7 +91,7 @@ body {
 .row__label:hover {
     transform:scale(1.05);
     font-weight: bolder;
-    background-color: var(--azure-x-11-web-color);
+    background-color: var(--celeste);
     cursor: pointer;
 }
 
@@ -79,6 +102,10 @@ body {
 .row__checkboxes {
     display: flex;
     overflow: scroll;
+    padding: 3px;
+    border: solid var(--blizzard-blue);
+    border-radius: 9px;
+    background-color: var(--powder-blue);
 }
 
 .row__checkboxes::-webkit-scrollbar {
@@ -87,16 +114,17 @@ body {
 
 .row__checkboxes label {
     font-size: x-small;
-    background-color: lightblue;
+    background-color: var(--blizzard-blue);
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 5px;
-    border: solid 1px rgb(139, 226, 255);
+    border: solid 1px;
     user-select: none;
 }
 .row__checkboxes label h4 {
-    font-weight: 100;
+    font-weight: 400;
     font-size: 10px;
 }
 
@@ -105,7 +133,23 @@ body {
     cursor: pointer;
 }
 
-
 #reset__btn {
     display: none;
+}
+
+.btn-style {
+    padding: 3px;
+    width: 45px;
+    border: solid var(--blizzard-blue);
+    border-radius: 9px;
+    background-color: var(--powder-blue);
+    cursor: pointer;
+    transition: 200ms;
+}
+
+.btn-style:hover {
+    transform: scale(1.05);
+}
+.btn-style:active {
+    transform: scale(.9);
 }
