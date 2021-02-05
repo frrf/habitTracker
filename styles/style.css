@@ -26,7 +26,6 @@ body {
     background: var(--powder-blue);
     width: 100vw;
     height: auto;
-    overflow: hidden; /* Hide scrollbars */
 }
 
 .container {
